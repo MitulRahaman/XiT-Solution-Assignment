@@ -16,6 +16,9 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
+            $table->tinyInteger('is_admin')->default(Config::get('variable_constants.check.no'));
+            $table->tinyInteger('is_verified')->default(Config::get('variable_constants.status.pending'));
+            $table->tinyInteger('is_deleted')->default(Config::get('variable_constants.check.no'));
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

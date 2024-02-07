@@ -25,10 +25,8 @@ Route::get('/dashboard', function () {
 
 Route::middleware('auth')->group(function () {
     Route::post('pendingUsers', [UserController::class, 'pendingUsers'])->name('user.pendingUsers');
-    Route::post('approve', [UserController::class, 'approve'])->name('user.approve');
-    Route::post('reject', [UserController::class, 'reject'])->name('user.reject');
-    // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::post('accept', [UserController::class, 'accept'])->name('user.accept');
+    Route::post('decline', [UserController::class, 'decline'])->name('user.decline');
 });
 
 require __DIR__.'/auth.php';

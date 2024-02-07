@@ -40,8 +40,7 @@ class RegisteredUserController extends Controller
             $user = $this->userService->storeUser($request);
             if ($user) {
                 Auth::login($user);
-                $allPendingUsers = null;
-                return redirect(RouteServiceProvider::HOME, compact('allPendingUsers'));
+                return redirect(RouteServiceProvider::HOME);
             }
         } catch (\Exception $exception) {
             return redirect()->back()->with('error', $exception->getMessage());

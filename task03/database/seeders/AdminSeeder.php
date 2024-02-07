@@ -28,6 +28,7 @@ class AdminSeeder extends Seeder
                 'password' => Hash::make('welcome'),
                 'is_admin' => Config::get('variable_constants.check.yes'),
                 'is_verified' => Config::get('variable_constants.status.approved'),
+                'is_deleted' => Config::get('variable_constants.check.no'),
             ]);
 
     }

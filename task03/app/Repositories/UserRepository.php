@@ -12,7 +12,13 @@ use Illuminate\Support\Facades\Storage;
 
 class UserRepository
 {
-    private $name, $email, $password;
+    private $id, $name, $email, $password;
+
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
 
     public function setName($name)
     {
@@ -53,19 +59,24 @@ class UserRepository
         ]);
     }
 
-    public function isAdmin()
+    public function accept()
     {
-        return User::where('email',$this->email)->where('is_admin', Config::get('variable_constants.check.yes'))->first();
+        return User::where('id',$this->id)
+            ->update(['is_verified' => Config::get('variable_constants.status.approved'), 'updated_at' => $this->updated_at]);
     }
 
-    public function isVerified()
+    public function decline()
     {
-        return User::where('email',$this->email)->where('is_verified', Config::get('variable_constants.status.approved'))->first();
+        return User::where('id',$this->id)
+            ->update(['is_deleted' => Config::get('variable_constants.check.yes'), 'updated_at' => $this->updated_at]);
     }
 
     public function allPendingUsers()
     {
-        return User::where('is_verified', Config::get('variable_constants.status.pending'))->select('id', 'name', 'email')->get();
+        return User::where('is_verified', Config::get('variable_constants.status.pending'))
+            ->where('is_deleted', '=', Config::get('variable_constants.check.no'))
+            ->select('id', 'name', 'email')
+            ->get();
     }
 
 
